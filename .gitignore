@@ -1,0 +1,10 @@
+# Build artifacts
+libgstspotify.so
+*.so
+
+gst-plugins-rs-build/gst-plugins-rs/target/
+# npm/cargo-style target folders just in case
+**/target/
+
+# Caches
+.cache/
