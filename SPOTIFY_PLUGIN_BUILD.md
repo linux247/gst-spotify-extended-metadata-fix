@@ -125,10 +125,18 @@ gst-inspect-1.0 spotify
    - `audio/spotify/src/common.rs` line ~166: `SpotifyId::from_uri()` → `SpotifyId::from_base62()`
    - `audio/spotify/src/spotifyaudiosrc/imp.rs` line ~415: `player.load(track, ...)` → `player.load(SpotifyUri::Track { id: track }, ...)`
 
-### Dockerfile
-- **File**: `Dockerfile`
-- **Line 72**: `COPY libgstspotify.so /usr/lib/x86_64-linux-gnu/gstreamer-1.0/`
-- **Removed**: Old wget + dpkg install of pre-built .deb (outdated version without fix)
+## Using in a Docker Container
+
+If you're building a custom Docker image that needs this plugin (e.g., for Mopidy):
+
+1. Build the plugin on your host using the scripts above.
+2. In your `Dockerfile`, copy the stripped plugin to the GStreamer plugin directory:
+   ```dockerfile
+   COPY libgstspotify.so /usr/lib/x86_64-linux-gnu/gstreamer-1.0/
+   ```
+3. Ensure your container has GStreamer and dependencies installed (typically `gstreamer1.0-plugins-base`, `gstreamer1.0-plugins-good`).
+
+**Note**: Replace any existing `wget` + `dpkg -i` lines that install an outdated `.deb` version of this plugin with the `COPY` command above to use your patched build.
 
 ## Troubleshooting
 
