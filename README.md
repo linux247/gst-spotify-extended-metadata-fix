@@ -1,12 +1,22 @@
 # GStreamer Spotify Plugin – Extended Metadata Fix (Temporary Build)
 
-This repo provides a reproducible build to produce a working `libgstspotify.so` that uses librespot's extended-metadata endpoint (fixing errors like "Track should be available, but no alternatives found"). It builds the plugin inside a container and then strips debug symbols on the host to get a small production-ready `.so`.
+This repo provides a reproducible build to produce a working `libgstspotify.so` that uses librespot's extended-metadata endpoint, fixing Spotify playback errors in Mopidy and other GStreamer-based applications.
 
-- Upstream context: librespot PR #1622, commit `a9122dcbf430bc0c690191cf245dac0cb038035e`
-- Source repos referenced at build time:
-  - Build harness: https://github.com/kingosticks/gst-plugins-rs-build
-  - GStreamer plugins: https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs/
-  - Librespot: https://github.com/librespot-org/librespot
+## Problem Solved
+
+Symptoms (one or more of):
+- **Mopidy logs**: `GStreamer error: Resource not found.` when trying to play Spotify tracks
+- **Spotifyd/librespot**: `Track should be available, but no alternatives found`
+
+**Root cause**: Spotify deprecated the `/metadata/4/` endpoint. Older librespot versions (< 0.5) fail to fetch track metadata.
+
+**Fix**: librespot PR #1622 (commit `a9122dcbf430bc0c690191cf245dac0cb038035e`) implements the new `/extended-metadata/v0/extended-metadata` endpoint. This build applies that fix to `libgstspotify.so`.
+
+## Source Repos
+
+- Build harness: https://github.com/kingosticks/gst-plugins-rs-build
+- GStreamer plugins: https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs/
+- Librespot: https://github.com/librespot-org/librespot
 
 ## Requirements
 

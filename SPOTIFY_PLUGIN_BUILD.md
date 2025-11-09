@@ -1,9 +1,13 @@
 # GStreamer Spotify Plugin - Extended Metadata Patch
 
 ## Overview
-This build applies the librespot extended-metadata endpoint fix (PR #1622, commit `a9122dcbf430bc0c690191cf245dac0cb038035e`) to resolve Spotify playback errors:
-- **Error Fixed**: "Track should be available, but no alternatives found."
-- **Root Cause**: Spotify deprecated the `/metadata/4/` endpoint; new endpoint is `/extended-metadata/v0/extended-metadata`
+This build applies the librespot extended-metadata endpoint fix (PR #1622, commit `a9122dcbf430bc0c690191cf245dac0cb038035e`) to resolve Spotify playback errors in Mopidy and other GStreamer-based applications.
+
+**Errors Fixed**:
+- **Mopidy**: `GStreamer error: Resource not found.` when attempting to play Spotify tracks
+- **Spotifyd/librespot**: `Track should be available, but no alternatives found`
+
+**Root Cause**: Spotify deprecated the `/metadata/4/` endpoint; the new endpoint is `/extended-metadata/v0/extended-metadata`. Older librespot versions fail to fetch track metadata, causing playback failures.
 
 ## Build Process
 
