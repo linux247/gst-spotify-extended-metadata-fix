@@ -8,3 +8,6 @@ gst-plugins-rs-build/gst-plugins-rs/target/
 
 # Caches
 .cache/
+
+# Local helper scripts (not part of published repo)
+publish-repo.sh
